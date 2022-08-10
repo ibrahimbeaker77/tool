@@ -1,0 +1,12 @@
+.float-right {
+    float: right;
+    color: #ffffff !important;
+}
+
+.data-table td, .data-table th {
+    vertical-align: middle;
+}
+
+.breadcrumb-item.active {
+    color: var(--primary-bg-color);
+}
