@@ -9,6 +9,16 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-outline-danger alert-dismissible mt-5" role="alert">
+                            <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+                                <div class="alert-message">
+                                <span>{{$error}}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                     <form method="POST" action="{{ route('login') }}">
 
                         <h4 class="text-center">{{ __('Enter your login details to access the dashboard') }}</h4>

@@ -25,38 +25,33 @@
                         <div class="card-header">
                             <div class="card-title">Edit Password</div>
                         </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label class="form-label">Current Password</label>
-                                <div class="wrap-input100 validate-input input-group" id="Password-toggle">
-                                    <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
-                                    </a>
-                                    <input class="input100 form-control" type="password" placeholder="Current Password" autocomplete="current-password">
+                        <form action="{{route('profile.update',$user->id)}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
+                                        <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                            <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                        </a>
+                                        <input class="input100 form-control" type="password" name="password" placeholder="New Password" autocomplete="new-password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Confirm Password</label>
+                                    <div class="wrap-input100 validate-input input-group" id="Password-toggle2">
+                                        <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                            <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                        </a>
+                                        <input class="input100 form-control" type="password" name="password_confirmation" placeholder="Confirm Password" autocomplete="new-password">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">New Password</label>
-                                <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
-                                    <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
-                                    </a>
-                                    <input class="input100 form-control" type="password" placeholder="New Password" autocomplete="new-password">
-                                </div>
+                            <div class="card-footer text-end">
+                                <input type="submit" class="btn btn-primary" value="Update Password">
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Confirm Password</label>
-                                <div class="wrap-input100 validate-input input-group" id="Password-toggle2">
-                                    <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
-                                    </a>
-                                    <input class="input100 form-control" type="password" placeholder="Confirm Password" autocomplete="new-password">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-end">
-                            <a href="javascript:void(0)" class="btn btn-primary">Update Password</a>
-                        </div>
+                        </form>
                     </div>
                     <div class="card panel-theme">
                         <div class="card-header">
@@ -65,25 +60,29 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="card-body no-padding">
-                            <div class="text-center chat-image mb-5">
-                                <div class="avatar avatar-xxl chat-profile mb-3 brround">
-                                    <a class="" href="profile.html"><img alt="avatar" src="http://127.0.0.1:8000/assets/images/users/user.jpg" class="brround"></a>
+                        <form action="{{route('profile.update',$user->id)}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body no-padding">
+                                <div class="text-center chat-image mb-5">
+                                    <div class="avatar avatar-xxl chat-profile mb-3 brround">
+                                        @php $profile = !empty($user->image) ? $user->image : 'default.png'; @endphp
+                                        <a class=""><img alt="avatar" src="{{asset('assets/images/users/'.$profile)}}" class="brround"></a>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <label>Change Profile</label>
-                                        <input type="file" class="form-control">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label>Change Profile</label>
+                                            <input name="image" type="file" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer text-end">
-                            <a href="javascript:void(0)" class="btn btn-primary my-1">Update Picture</a>
-                        </div>
+                            <div class="card-footer text-end">
+                                <input type="submit" class="btn btn-primary my-1" value="Update Picture">
+                            </div>
+                        </form>
                     </div>
                     <div class="card panel-theme">
                         <div class="card-header">
@@ -111,55 +110,59 @@
                         <div class="card-header">
                             <h3 class="card-title">Edit Profile Information</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input type="text" class="form-control" value="">
+                        <form action="{{route('profile.update',$user->id)}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            <input type="text" class="form-control" name="name" value="{{$user->name}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Email address</label>
+                                            <input type="email" class="form-control" name="email" value="{{$user->email}}" readonly="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input type="text" class="form-control" name="phone" value="{{$user->phone}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Company (Optional)</label>
+                                            <input type="text" class="form-control" name="company" value="{{$user->company}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>Website (Optional)</label>
+                                            <input type="text" class="form-control" name="website" value="{{$user->website}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">About Me</label>
+                                            <textarea class="form-control" name="about"  rows="6">{{$user->about}}</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label>Email address</label>
-                                        <input type="email" class="form-control" value="" readonly="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="text" class="form-control" value="">
-                                    </div>
-                                </div>
+                            <div class="card-footer text-end">
+                                <input type="submit" class="btn btn-primary my-1" value="Update Profile">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label>Company (Optional)</label>
-                                        <input type="email" class="form-control" value="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label>Website (Optional)</label>
-                                        <input type="text" class="form-control" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label">About Me</label>
-                                        <textarea class="form-control" rows="6">My bio...</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-end">
-                            <a href="javascript:void(0)" class="btn btn-primary my-1">Update Profile</a>
-                        </div>
+                        </form>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">

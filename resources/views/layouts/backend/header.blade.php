@@ -18,6 +18,8 @@
 <link id="style" href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
 
 <!-- STYLE CSS -->
+
+<link rel="stylesheet" href="{{asset('assets/css/toastr.css')}}">
 <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/admin-custom-style.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/css/dark-style.css')}}" rel="stylesheet" />

@@ -1076,6 +1076,24 @@ pre {
     padding: 0.75rem 1.25rem;
     color: inherit;
 }
+.alert-dismissible .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: 300;
+    padding: 10px 15px;
+    color: inherit;
+}
+
+.alert-outline-danger{
+    color: #f43643;
+    border: 1px solid #f43643;
+    border-right: 4px solid #f43643;
+    border-left: 4px solid #f43643;
+}
+.alert-outline-danger .alert-link {
+    color: #f43643;
+}
 
 .alert-default {
     background-color: #f9f7f7;
@@ -1184,7 +1202,13 @@ pre {
 }
 
 .alert {
-    font-size: 0.9375rem;
+    position: relative;
+    padding: 0;
+    margin-bottom: 1rem;
+    /* border: none; */
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .075);
+    border-radius: .25rem;
 }
 
 .alert-icon {
