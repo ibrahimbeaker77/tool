@@ -9,7 +9,7 @@ use App\Models\Roles;
 class Permissions extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'name', 'type' ];
+    protected $fillable = [ 'name', 'guard_name' ];
 
     public function roles()
     {

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use DB;
+use Illuminate\Support\Arr;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -27,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.users.create');
+        $roles = Role::pluck('name','name')->all();
+        return view('backend.users.create', compact('roles'));
     }
 
     /**
@@ -62,7 +66,8 @@ class UserController extends Controller
             $request->image->move(public_path('/assets/images/users'), $data['image']);
         }
 
-        User::create($data);
+        $user = User::create($data);
+        $user->assignRole($request->input('roles'));
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
@@ -85,7 +90,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('backend.users.edit', compact('user'));
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
+        return view('backend.users.edit', compact('user','roles','userRole'));
     }
 
     /**

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Roles;
 use App\Models\Permissions;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use DB;
 
 class RolesController extends Controller
 {
@@ -13,6 +16,14 @@ class RolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    function __construct()
+    {
+         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:role-create', ['only' => ['create','store']]);
+         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $roles = Roles::latest()->get();
@@ -27,8 +38,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permissions = Permissions::latest()->get();
-        return view('backend.roles.create', compact(['permissions']) );
+        $permission = Permission::get();
+        return view('backend.roles.create',compact('permission'));
     }
 
     /**
@@ -44,7 +55,8 @@ class RolesController extends Controller
             'permission_id' => 'required',
         ]);
 
-        Roles::create($request->all());
+        $role = Role::create(['name' => $request->input('name')]);
+        $role->syncPermissions($request->input('permission'));
        
         return redirect()->route('roles.index')->with('success', 'Role Created Successfully.');
     }
