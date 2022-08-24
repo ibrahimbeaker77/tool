@@ -49,14 +49,9 @@
                                 </div>
 
                                 <div class="row mb-4">
-                                    <label class="col-md-3 form-label">Type :</label>
+                                    <label class="col-md-3 form-label">Guard Name :</label>
                                     <div class="col-md-9">
-                                        <select name="type" class="form-control">
-                                            <option value="create">Create</option>
-                                            <option value="edit">Edit</option>
-                                            <option value="view">View</option>
-                                            <option value="delete">Delete</option>
-                                        </select>
+                                        <input type="text" class="form-control" name="guard_name">
                                     </div>
                                 </div>
 

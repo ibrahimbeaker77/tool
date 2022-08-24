@@ -48,14 +48,9 @@
                                 </div>
 
                                 <div class="row mb-4">
-                                    <label class="col-md-3 form-label">Type :</label>
+                                    <label class="col-md-3 form-label">Guard Name :</label>
                                     <div class="col-md-9">
-                                        <select name="type" class="form-control">
-                                            <option value="create" {{($permission->type == "create") ? "selected" : ''}}>Create</option>
-                                            <option value="edit" {{($permission->type == "edit") ? "selected" : ''}}>Edit</option>
-                                            <option value="view" {{($permission->type == "view") ? "selected" : ''}}>View</option>
-                                            <option value="delete" {{($permission->type == "delete") ? "selected" : ''}}>Delete</option>
-                                        </select>
+                                        <input type="text" class="form-control" name="guard_name" value="{{$permission->guard_name}}">
                                     </div>
                                 </div>
                                 

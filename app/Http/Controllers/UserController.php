@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:user-list', ['only' => ['index','store']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', '=', '2')->latest()->get();
+        $users = User::latest()->get();
         return view('backend.users.index', compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -116,6 +123,8 @@ class UserController extends Controller
         }
 
         $user->update($data);
+        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+        $user->assignRole($request->input('roles'));
         return redirect()->route('users.index')->with('success', 'User Updated successfully.');
     }
 

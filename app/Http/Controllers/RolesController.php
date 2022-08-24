@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Roles;
-use App\Models\Permissions;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -19,16 +17,15 @@ class RolesController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:role-list', ['only' => ['index','store']]);
          $this->middleware('permission:role-create', ['only' => ['create','store']]);
          $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
     public function index()
     {
-        $roles = Roles::latest()->get();
-        $permissions = Permissions::latest()->get();
-        return view('backend.roles.index', compact(['roles', 'permissions']))->with('i', (request()->input('page', 1) - 1) * 5);
+        $roles = Role::latest()->get();
+        return view('backend.roles.index', compact(['roles']))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -51,8 +48,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'          => 'required|unique:roles,title',
-            'permission_id' => 'required',
+            'name'          => 'required|unique:roles,name',
         ]);
 
         $role = Role::create(['name' => $request->input('name')]);
@@ -67,9 +63,14 @@ class RolesController extends Controller
      * @param  \App\Models\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function show(Roles $roles)
+    public function show($id)
     {
-        //
+        $role = Role::find($id);
+        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
+            ->where("role_has_permissions.role_id",$id)
+            ->get();
+    
+        return view('backend.roles.show',compact('role','rolePermissions'));
     }
 
     /**
@@ -78,9 +79,14 @@ class RolesController extends Controller
      * @param  \App\Models\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function edit(Roles $role)
+    public function edit($id)
     {
-        return view('backend.roles.edit', compact('role'));
+        $role = Role::find($id);
+        $permission = Permission::get();
+        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
+            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
+            ->all();
+        return view('backend.roles.edit', compact('role','permission','rolePermissions'));
     }
 
     /**
@@ -90,14 +96,17 @@ class RolesController extends Controller
      * @param  \App\Models\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Roles $role)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name'          => 'required',
-            'permission_id' => 'required',
         ]);
 
-        $role->update($request->all());
+        $role = Role::find($id);
+        $role->name = $request->input('name');
+        $role->save();
+    
+        $role->syncPermissions($request->input('permission'));
         return redirect()->route('roles.index')->with('success', 'Role Updated Successfully');
     }
 
@@ -107,9 +116,9 @@ class RolesController extends Controller
      * @param  \App\Models\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Roles $role)
+    public function destroy(Roles $role, $id)
     {
-        $role->delete();
+        DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('roles.index')->with('success', 'Role Deleted Successfully');
     }
 }

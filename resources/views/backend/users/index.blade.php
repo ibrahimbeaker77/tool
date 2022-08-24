@@ -65,7 +65,13 @@
                                                 <td>{{$detail->company}}</td>
                                                 <td>{{$detail->website}}</td>
                                                 <td>{{($detail->status == "0") ? "In Active" : "Active"}}</td>
-                                                <td>{{($detail->role == "1") ? "Admin" : "Customer"}}</td>
+                                                <td>
+                                                    @if(!empty($detail->getRoleNames()))
+                                                        @foreach($detail->getRoleNames() as $v)
+                                                            <label class="badge badge-success">{{ $v }}</label>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
                                                 <td>{{($detail->membership == "2") ? "Free" : "Paid"}}</td>
                                                 <td>{{($detail->apiKeyStatus == "0") ? "In Active" : "Active"}}</td>
                                                 <td>{{$detail->created_at}}</td>

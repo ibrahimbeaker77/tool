@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanyInformationSeeder::class);
         $this->call(SubscribersSeeder::class);
         $this->call(ToolCategoriesSeeder::class);
+        $this->call(PermissionTableSeeder::class);
     }
 }

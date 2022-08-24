@@ -28,22 +28,30 @@
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{url('profile')}}"><i class="side-menu__icon fe fe-user"></i><span class="side-menu__label">Profile</span></a>
                 </li>
-
+                
+                @canany(['permission-list','permission-create'])
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{url('permissions')}}"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Permissions</span></a>
                 </li>
+                @endcanany
 
+                @canany(['role-list','role-create'])
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{url('roles')}}"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Roles</span></a>
                 </li>
+                @endcanany
 
+                @canany(['user-list','user-create'])
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{url('users')}}"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Users</span></a>
                 </li>
+                @endcanany
 
+                @canany(['user-list','user-create'])
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{url('users')}}"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Orders</span></a>
                 </li>
+                @endcanany
 
                 <li class="sub-category">
                     <h3>General Information</h3>

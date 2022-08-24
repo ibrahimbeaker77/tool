@@ -51,11 +51,11 @@
                                 <div class="row mb-4">
                                     <label class="col-md-3 form-label">Permissions :</label>
                                     <div class="col-md-9 form-group">
-                                        @foreach ($permissions as $item)
+                                        @foreach ($permission as $item)
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control custom-checkbox-md">
-                                                    <input type="checkbox" class="custom-control-input" name="example-checkbox5" value="{{$item->id}}" checked>
-                                                    <span class="custom-control-label">{{$item->name}} ({{$item->type}})</span>
+                                                    <input type="checkbox" class="custom-control-input" name="permission[]" value="{{$item->id}}">
+                                                    <span class="custom-control-label">{{$item->name}}</span>
                                                 </label>
                                             </div>
                                         @endforeach

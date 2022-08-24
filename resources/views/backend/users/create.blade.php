@@ -96,6 +96,19 @@
                                         <textarea class="form-control" name="about" rows="7" id="editor"></textarea>
                                     </div>
                                 </div>
+                                <div class="row mb-4">
+                                    <label class="col-md-3 form-label">Assign Role</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control rounded-0" name="roles">
+                                            <option value="">Please Select</option>
+                                            @if(count($roles))
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role}}">{{$role}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <div class="row">

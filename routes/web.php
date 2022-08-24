@@ -71,25 +71,29 @@ use App\Http\Controllers\primeController;
 Route::get('/',[primeController::class, 'toolPrime']);
 
 Auth::routes();
-Route::resource('/permissions', PermissionsController::class);
-Route::resource('/roles', RolesController::class);
-Route::resource('/users', UserController::class);
 
-Route::resource('/dashboard', AdminController::class);
-Route::resource('/profile', ProfileController::class);
-Route::resource('/subscribers', SubscribersController::class);
-Route::resource('/social-links', SocialLinksController::class);
-Route::resource('/contact', ContactController::class);
+Route::group(['middleware' => ['auth', 'verified', 'Admin']], function()
+{
+    Route::resource('/permissions', PermissionsController::class);
+    Route::resource('/roles', RolesController::class);
+    Route::resource('/users', UserController::class);
 
-Route::resource('/blogs', BlogsController::class);
-Route::resource('/blogs-category', BlogCategoriesController::class);
+    Route::get('/dashboard', [AdminController::class,'index'])->name('dashboard');
+    Route::resource('/profile', ProfileController::class);
+    Route::resource('/subscribers', SubscribersController::class);
+    Route::resource('/social-links', SocialLinksController::class);
+    Route::resource('/contact', ContactController::class);
 
-Route::resource('/faqs', FaqsController::class);
-Route::resource('/testimonials', TestimonialsController::class);
-Route::resource('/advertise', AdvertiseController::class);
-Route::resource('/pages', PagesController::class);
-Route::resource('/packages', PackagesController::class);
-Route::resource('/company-information', CompanyInformationController::class);
+    Route::resource('/blogs', BlogsController::class);
+    Route::resource('/blogs-category', BlogCategoriesController::class);
 
-Route::resource('/tools', ToolsController::class);
-Route::resource('/tools-category', ToolCategoriesController::class);
+    Route::resource('/faqs', FaqsController::class);
+    Route::resource('/testimonials', TestimonialsController::class);
+    Route::resource('/advertise', AdvertiseController::class);
+    Route::resource('/pages', PagesController::class);
+    Route::resource('/packages', PackagesController::class);
+    Route::resource('/company-information', CompanyInformationController::class);
+
+    Route::resource('/tools', ToolsController::class);
+    Route::resource('/tools-category', ToolCategoriesController::class);
+});

@@ -40,7 +40,6 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Permission</th>
                                             <th>Created At</th>
                                             <th class="text-center">Action</th>
                                         </tr>
@@ -49,8 +48,7 @@
                                         @foreach ($roles as $detail)
                                             <tr>
                                                 <td>{{$detail->id}}</td>
-                                                <td>{{$detail->title}}</td>
-                                                <td>{{$detail->permission_id}}</td>
+                                                <td>{{$detail->name}}</td>
                                                 <td>{{$detail->created_at}}</td>
                                                 <td class="text-center align-middle">
                                                     <form action="{{ route('roles.destroy', $detail->id) }}" method="POST">
